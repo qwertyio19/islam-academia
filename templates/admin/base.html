@@ -1,0 +1,18 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/adminlte/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jazzmin/css/main.css' %}">
+    {% block extrahead %}{% endblock %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+    <script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/adminlte/js/adminlte.min.js' %}"></script>
+    <script src="{% static 'jazzmin/js/main.js' %}"></script>
+</body>
+</html>
