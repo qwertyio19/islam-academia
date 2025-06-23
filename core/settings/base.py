@@ -5,13 +5,11 @@ from django.utils.translation import gettext_lazy as _
 from core.settings.jazzmin import JAZZMIN_SETTINGS
 from dotenv import load_dotenv
 
-CSRF_TRUSTED_ORIGINS = ['https://d8d2-158-181-248-104.ngrok-free.app']
-
 load_dotenv()
+
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-#SECRET_KEY = os.environ.get("SECRET_KEY")
-SECRET_KEY = 'django-insecure-6hsivhlmq8-fv4$0hy9&_^pcjsp)o*f1poic6eegmzhb@#1ht5'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 ALLOWED_HOSTS = ['*']
 
 if DEBUG:
@@ -186,18 +184,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+STATIC_URL = '/back_static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'back_static')
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = [
-    BASE_DIR / "Frontend" / "dist" / "assets"
-]
-
-
-MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR/"media"
+MEDIA_URL = "back_media/"
+MEDIA_ROOT = BASE_DIR/"back_media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
