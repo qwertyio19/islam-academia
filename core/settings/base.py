@@ -2,12 +2,11 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
-from dotenv import load_dotenv
 from core.settings.jazzmin import JAZZMIN_SETTINGS
 
+from dotenv import load_dotenv
 
 load_dotenv()
-
 
 def get_list(env_name):
     val = os.environ.get(env_name, "")
@@ -26,14 +25,12 @@ PRODUCTION = os.environ.get("PRODUCTION", "False") == "True"
 
 ALLOWED_HOSTS = get_list("ALLOWED_HOSTS") or ['127.0.0.1', 'localhost']
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 
 LANGUAGES = [
     ('ru', _('Russian')),
@@ -43,19 +40,11 @@ LANGUAGES = [
     ('ar', _('Arabic')),
 ]
 
-LANGUAGE_CODE = "ru"
-TIME_ZONE = "Asia/Bishkek"
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 MODELTRANSLATION_LANGUAGES = ('ru', 'ky', 'tr', 'ar', 'en')
 TRANSLATABLE_MODEL_MODULES = ['app.base.models']
 
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
-]
 
 THEME_APPS = [
     "jazzmin",
@@ -83,6 +72,7 @@ MY_APPS = [
     "app.search",
 ]
 
+
 LIBRARY_APPS = [
     'modeltranslation',
     "rest_framework",
@@ -93,6 +83,17 @@ LIBRARY_APPS = [
     'django_filters',
 ]
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
+
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
 INSTALLED_APPS = [
     *THEME_APPS,
     *DJANGO_APPS,
@@ -100,28 +101,33 @@ INSTALLED_APPS = [
     *LIBRARY_APPS,
 ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware', 
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-]
-
-JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
-
 CORS_ALLOWED_ORIGINS = get_list("CORS_ALLOWED_ORIGINS") or []
 CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
 CSRF_TRUSTED_ORIGINS = get_list("CSRF_TRUSTED_ORIGINS") or []
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'height': 300,
+        'width': 800,
+    },
 }
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+]
 
 
 TEMPLATES = [
@@ -140,39 +146,8 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "core.wsgi.application"
-
-STATIC_URL = '/back_static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'back_static')
-
-MEDIA_URL = "back_media/"
-MEDIA_ROOT = BASE_DIR / "back_media"
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-from core.settings.jazzmin import JAZZMIN_SETTINGS
-JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
-
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
-CKEDITOR_IMAGE_BACKEND = "pillow"
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Custom',
-        'height': 300,
-        'width': 800,
-    },
-}
-CKEDITOR_5_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'height': 300,
-        'width': '100%',
-        'config': {
-            'language': 'en',
-        },
-    },
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -188,3 +163,36 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+LANGUAGE_CODE = "ru"
+
+TIME_ZONE = "Asia/Bishkek"
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+STATIC_URL = "back_static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'back_static')
+
+MEDIA_URL = "back_media/"
+MEDIA_ROOT = BASE_DIR / "back_media"
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+JAZZMIN_SETTINGS=JAZZMIN_SETTINGS
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+        'config': {
+            'language': 'en',
+        },
+    },
+}

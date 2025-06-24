@@ -27,7 +27,7 @@ urlpatterns += i18n_patterns(
     path("api/v1/search/", include("app.search.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("ckeditor/", include("ckeditor_uploader.urls")),
-    path("", index, name="index"),
+    # path("", index, name="index"),
 )
 
 # Обслуживание статики и медиа
@@ -41,6 +41,6 @@ else:
     ]
 
 # Обработка всех остальных запросов (SPA)
-urlpatterns += [
-    re_path(r"^(?!static/|media/|api/|admin/|ckeditor/|i18n/|ru/api/).*", index),
-]
+# urlpatterns += [
+#     re_path(r"^(?!static/|media/|api/|admin/|ckeditor/|i18n/|ru/api/).*", index),
+# ]
