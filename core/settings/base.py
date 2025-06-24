@@ -3,21 +3,37 @@ from pathlib import Path
 from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
+from core.settings.jazzmin import JAZZMIN_SETTINGS
+
 
 load_dotenv()
+
 
 def get_list(env_name):
     val = os.environ.get(env_name, "")
     return [x.strip() for x in val.split(",") if x.strip()]
+
+
+ROOT_URLCONF = "core.urls"
+
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "super-secret-key") 
 
 PRODUCTION = os.environ.get("PRODUCTION", "False") == "True"
-DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = get_list("ALLOWED_HOSTS") or ['*'] 
+ALLOWED_HOSTS = get_list("ALLOWED_HOSTS") or ['127.0.0.1', 'localhost']
+
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+
 
 LANGUAGES = [
     ('ru', _('Russian')),
@@ -96,10 +112,11 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = get_list("CORS_ALLOWED_ORIGINS")  #
-CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
+JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
 
-CSRF_TRUSTED_ORIGINS = get_list("CSRF_TRUSTED_ORIGINS")  
+CORS_ALLOWED_ORIGINS = get_list("CORS_ALLOWED_ORIGINS") or []
+CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
+CSRF_TRUSTED_ORIGINS = get_list("CSRF_TRUSTED_ORIGINS") or []
 
 
 REST_FRAMEWORK = {

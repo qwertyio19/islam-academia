@@ -12,3 +12,7 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT'),
     }
 }
+
+
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS")
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS")
